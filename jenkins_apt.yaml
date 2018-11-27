@@ -1,0 +1,19 @@
+---
+- hosts: 10.154.0.6
+  tasks:
+  - name: Update and Install
+    shell: wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add -
+    become: true
+
+  - name: Set Env
+    shell: echo deb https://pkg.jenkins.io/debian-stable binary/ | sudo tee /etc/apt/sources.list.d/jenkins.list
+    become: true
+
+  - name: Shell Jenkins Command
+    shell: sudo apt-get update
+    become: true
+
+  - name: Install Jenkins
+    shell: sudo apt-get install jenkins -y
+    become: true
+...
