@@ -1,0 +1,33 @@
+---
+- hosts: terraform@10.154.0.4
+  tasks:
+    - name: Download Nexus
+      get_url:
+        url: http://download.sonatype.com/nexus/3/latest-unix.tar.gz
+        dest: /home/terraform
+      become: true
+    - name: Unarchive Nexus
+      shell: sudo tar xvf latest-unix.tar.gz -C /opt 
+      become: true
+    - name: Create User
+      user:
+        name: nexus
+    - name: Create Link
+      file:
+        src: /opt/nexus-3.14.0-04/
+        dest: /opt/nexus
+        state: link
+    - name: Chown Nexus
+      shell: sudo chown -R nexus:nexus /opt/nexus
+      become: true
+    - name: Add To
+      shell: sudo echo 'run_as_user="nexus"' >  /opt/nexus/bin/nexus.rc
+      become: true
+    - name: Create Link Two
+      file:
+        src: /opt/nexus/bin/nexus
+        dest: /etc/init.d/nexus
+        state: link
+    - name: Enable
+      shell: sudo systemctl enable nexus
+

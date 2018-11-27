@@ -1,0 +1,11 @@
+---
+- hosts: terraform@10.154.0.3
+  tasks:
+  - name: Run Ubuntu Jenkins
+    import_tasks: ~/Ansible/jenkins_apt.yaml
+    when: ansible_distribution == "Ubuntu"
+
+  - name: Run CentOS Jenkins
+    import_tasks: ~/Ansible/jenkins_platform.yaml
+    when: ansible_distribution == "CentOS"
+...
