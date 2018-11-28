@@ -1,0 +1,16 @@
+---
+- hosts: terraform@10.154.0.6
+  tasks:
+    - name: Install Git
+      yum: 
+        name: git
+        state: latest
+      become: true
+    - name: Clone Repo
+      git: 
+        repo: https://github.com/munir505/Ansible
+        dest: /home/terraform/Ansible
+        clone: yes
+    - name: Git Config
+      shell: chdir=/home/terraform/Ansible ./git_configure.bash
+...
