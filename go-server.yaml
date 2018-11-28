@@ -1,0 +1,18 @@
+---
+- hosts: terraform@10.154.0.3
+  tasks:
+    - name: Clone Repo
+      git: 
+        repo: https://github.com/munir505/Go-Server-Service
+        dest: /home/terraform/Go-Server-Service
+        clone: yes
+    - name: Add User
+      user: 
+        name: munir
+      become: true
+    - name: Run make
+      make:
+        chdir: /home/terraform/Go-Server-Service
+        target: systemd_install
+      become: true
+...
