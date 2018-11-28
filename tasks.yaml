@@ -1,0 +1,14 @@
+---
+- hosts: terraform@10.154.0.4
+  tasks:
+    - name: Include vars of stuff.yaml into the 'stuff' variable (2.2).
+      include_vars:
+        file: /home/munirkakar505/Ansible/vars_file.yaml
+    - debug:
+        msg: "{{ user_password }}"
+    - name: Add User
+      user: 
+        name: Python
+        password: "{{ user_password }}"
+      become: true
+...
